@@ -3,7 +3,7 @@ var mecab = require('mecab-ya');
 
 exports.nouns = function(text, callback){
     mecab.pos(text, function(err, result){
-    	let nouns = [];
+    	var nouns = [];
     	if(result){
     		result.forEach(function(value){
     			if(['MAG', 'NNG'].indexOf(value[1]) >= 0){
@@ -13,4 +13,4 @@ exports.nouns = function(text, callback){
     	}
     	callback(err, nouns);
     });
-}
+};

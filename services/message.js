@@ -8,14 +8,12 @@ var PosService = require('../services/pos');
 // 2. intent를 분류한다.
 // 3. entity를 인식한다.
 exports.preProcess = function(req, callback){
-    console.log("Message preProcess");
     var user_key = req.body.user_key;
     var type = req.body.type;   // text
     var content = req.body.content;
 
     // 자연어 처리해서 명사만 뽑자
-    PosService.nouns(content, function(err, result){
-        nouns = result;
+    PosService.nouns(content, function(err, nouns){
 
         // 가능한 Intent들 가져오기
         IntentService.classfication(nouns, function(intents){

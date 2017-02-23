@@ -10,8 +10,8 @@ exports.classfication = function(nouns, callback){
     	IntentModel.find({keywords : value}, function(err, intents){
     		if(err) return res.status(500).send({error: 'database failure'});
     		
-	        for(let intent_idx in intents){
-	        	let expect_intent = {};
+	        for(var intent_idx in intents){
+	        	var expect_intent = {};
 	        	expect_intent.key = intents[intent_idx].key;
 	        	expect_intent.name = intents[intent_idx].key;
 
@@ -25,4 +25,4 @@ exports.classfication = function(nouns, callback){
     	});
     });
     
-}
+};

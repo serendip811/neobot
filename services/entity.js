@@ -10,9 +10,9 @@ exports.recognition = function(nouns, callback){
     	EntityModel.find({values : {$elemMatch : {key : value}}}, {key : 1, name : 1, values : {$elemMatch : {key : value}}}, function(err, entities){
     		if(err) return res.status(500).send({error: 'database failure'});
 
-	        for(let entity_idx in entities){
-	        	let expect_entity = {};
-	        	let entity = entities[entity_idx];
+	        for(var entity_idx in entities){
+	        	var expect_entity = {};
+	        	var entity = entities[entity_idx];
 	        	expect_entity.key = entity.key;
 	        	expect_entity.name = entity.name;
 	        	expect_entity.value = entity.get("values")[0].value;
@@ -26,4 +26,4 @@ exports.recognition = function(nouns, callback){
     	});
     });
 
-}
+};
