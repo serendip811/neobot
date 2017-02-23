@@ -1,23 +1,28 @@
 // services/intent.js
 var IntentModel = require('../models/intent');
 
-exports.getIntent = function(content, callback){
-	console.log('getIntent');
-    IntentModel.find(function(err, intents){
-        if(err) return res.status(500).send({error: 'database failure'});
+exports.classfication = function(nouns, callback){
+    console.log('Intent Classfication');
 
-        var expect_intent = {};
-        for(let intent_idx in intents){
-        	let intent = intents[intent_idx];
-        	for(let i = 0; i < intent.keywords.length; i++){
-        		if(content.includes(intent.keywords[i])){
-        			expect_intent.key = intent.key;
-        			expect_intent.name = intent.name;
-        		}
-        	}
-        }
-        callback(expect_intent);
+    var itemProcessed = 0;
+    var expect_intents = [];
+    nouns.forEach(function(value){
+    	IntentModel.find({keywords : value}, function(err, intents){
+    		if(err) return res.status(500).send({error: 'database failure'});
+    		
+	        for(let intent_idx in intents){
+	        	let expect_intent = {};
+	        	expect_intent.key = intents[intent_idx].key;
+	        	expect_intent.name = intents[intent_idx].key;
+
+	        	expect_intents.push(expect_intent);
+	        }
+	        
+	        itemProcessed++;
+    		if(itemProcessed === nouns.length){
+    			callback(expect_intents);
+    		}
+    	});
     });
-
-
+    
 }
