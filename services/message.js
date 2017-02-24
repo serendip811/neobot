@@ -1,5 +1,4 @@
 // services/message.js
-var UserMessageModel = require('../models/user_message');
 var IntentService = require('../services/intent');
 var EntityService = require('../services/entity');
 var PosService = require('../services/pos');
