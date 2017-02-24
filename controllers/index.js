@@ -35,6 +35,7 @@ module.exports = function(app)
                 MessageService.CandidateResponseGenerator(intents, entities, context, function(responseCandidates){
                     //응답 선택하기
                     ResponseService.selector(responseCandidates, context, function(response){
+                        // TODO: 여기는 그냥 리턴할지 버튼, 타입 이런거 맞춰 리턴할지
                         res.json(response);
                     });
                 });

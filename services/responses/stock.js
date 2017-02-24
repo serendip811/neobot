@@ -1,5 +1,6 @@
 // services/resonse/stock.js
 
+// TODO: 
 // 주식 정보 가져와서 뿌려주는 부분 구현하기
 exports.getResponses = function(intent, entities, context, callback){
 	console.log("stock getResponses");
@@ -10,7 +11,7 @@ exports.getResponses = function(intent, entities, context, callback){
 
 	response.intent = intent;
 	response.entities = entities;
-	
+
 	callback(response);
 
 }

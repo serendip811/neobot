@@ -6,6 +6,7 @@ exports.getContext = function(req, callback){
     console.log("Context getContext");
     user_key = req.body.user_key;
 
+    // TODO: 
     // context 가져올때 시간도 체크를 해야하지 않을까? 최근 몇분의 context만 가져오도록.
     ContextModel.findOne({user_key : user_key}, null, { sort : {date:-1} }, function(err, context){
         console.log(context);

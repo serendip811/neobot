@@ -3,7 +3,7 @@ var UserMessageModel = require('../models/user_message');
 var IntentService = require('../services/intent');
 var EntityService = require('../services/entity');
 var PosService = require('../services/pos');
-var ResponseFactoryService = require('../services/response/factory');
+var ResponseService = require('../services/response');
 
 // 1. 자연어 처리해서 명사만 뽑는다.
 // 2. intent를 분류한다.
@@ -44,7 +44,7 @@ exports.CandidateResponseGenerator = function(intents, entities, context, callba
 
     for (var i = intents.length - 1; i >= 0; i--) {
         var intent = intents[i];
-        ResponseFactoryService.getResponses(intent, entities, context, function(responseCandidate){
+        ResponseService.getResponses(intent, entities, context, function(responseCandidate){
             responseCandidates.push(responseCandidate);
 
             itemProcessed++;
