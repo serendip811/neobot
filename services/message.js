@@ -3,6 +3,7 @@ var UserMessageModel = require('../models/user_message');
 var IntentService = require('../services/intent');
 var EntityService = require('../services/entity');
 var PosService = require('../services/pos');
+var ResponseFactoryService = require('../services/response/factory');
 
 // 1. 자연어 처리해서 명사만 뽑는다.
 // 2. intent를 분류한다.
@@ -33,8 +34,23 @@ exports.preProcess = function(req, callback){
 exports.CandidateResponseGenerator = function(intents, entities, context, callback){
     console.log("Message CandidateResponseGenerator");
 
-    var responseCandidates = [{ intents : intents, entities : entities}, {}];
+    var itemProcessed = 0;
+    var responseCandidates = [];
 
-    callback(responseCandidates)
+    // 만약에 intents가 없는 경우에는 context의 intent를 뒤져서 context의 intent를 넣어주자
+    if(intents.length === 0){
+        intents.push(context.intent);
+    }
 
+    for (var i = intents.length - 1; i >= 0; i--) {
+        var intent = intents[i];
+        ResponseFactoryService.getResponses(intent, entities, context, function(responseCandidate){
+            responseCandidates.push(responseCandidate);
+
+            itemProcessed++;
+            if(itemProcessed === intents.length){
+                callback(responseCandidates);
+            }
+        });
+    }
 }

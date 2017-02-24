@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
 var app = express();
 
 // [CONFIGURE APP TO USE bodyParser]

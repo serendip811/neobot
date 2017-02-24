@@ -11,11 +11,7 @@ exports.classfication = function(nouns, callback){
     		if(err) return res.status(500).send({error: 'database failure'});
     		
 	        for(var intent_idx in intents){
-	        	var expect_intent = {};
-	        	expect_intent.key = intents[intent_idx].key;
-	        	expect_intent.name = intents[intent_idx].key;
-
-	        	expect_intents.push(expect_intent);
+	        	expect_intents.push(intents[intent_idx]);
 	        }
 	        
 	        itemProcessed++;
@@ -24,5 +20,4 @@ exports.classfication = function(nouns, callback){
     		}
     	});
     });
-    
 };

@@ -3,8 +3,9 @@ var Schema = mongoose.Schema;
 
 var contextSchema = new Schema({
     user_key: String,
-    intent: String,
-    entities: Array
+    intent: Schema.Types.Mixed,
+    entities: Array,
+    date: { type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('context', contextSchema);

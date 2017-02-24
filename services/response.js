@@ -7,11 +7,19 @@ exports.selector = function(responseCandidates, context, callback){
     
     var response = responseCandidates[0];
 
-    var user_key = context.user_key;
-    var intent = {};
-    var entities = [{},{}];
+    console.log("response :");
+    console.log(response);
 
-	ContextService.setContext(user_key, intent, entities, function(){
-		callback(response);
-	});
+    if(Object.keys(response).length === 0){
+		// no response
+		callback('no response');
+    } else {
+	    var user_key = context.user_key;
+	    var intent = response.intent;
+	    var entities = response.entities;
+
+		ContextService.setContext(user_key, intent, entities, function(){
+			callback(response);
+		});
+    }
 }
