@@ -5,6 +5,8 @@ exports.nouns = function(text, callback){
     console.log("pos nouns");
     mecab.pos(text, function(err, result){
     	var nouns = [];
+        console.log("pos : ", result);
+
     	if(result){
             console.log(result);
     		result.forEach(function(value){
