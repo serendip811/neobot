@@ -2,6 +2,7 @@
 var mecab = require('mecab-ya');
 
 exports.nouns = function(text, callback){
+    console.log("pos nouns");
     mecab.pos(text, function(err, result){
     	var nouns = [];
     	if(result){

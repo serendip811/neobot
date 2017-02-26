@@ -6,7 +6,7 @@ var MenuResponse = require('./responses/menu');
 var StockResponse = require('./responses/stock');
 
 exports.getResponses = function(intent, entities, context, callback){
-	console.log("factory getResponses");
+	console.log("response getResponses");
 
 	var intent_name = '';
 	if(typeof intent === 'object')

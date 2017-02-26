@@ -1,6 +1,14 @@
 // services/entity.js
 var EntityModel = require('../models/entity');
 
+exports.getEntity = function(entity_key, callback){
+    console.log('Entity getEntity');
+    EntityModel.findOne({key : entity_key}, function(err, entity){
+        if(err) return res.status(500).send({error: 'database failure'});
+        callback(entity);
+    });
+}
+
 exports.recognition = function(nouns, callback){
     console.log('Entity Recognition');
 

@@ -16,7 +16,7 @@ module.exports = function(app)
 
     // GET keyboard
     app.get('/keyboard', function(req,res){
-        console.log("/keyboard");
+        console.log("GET /keyboard");
         KeyboardModel.findOne(function(err, keyboards){
             if(err) return res.status(500).send({error: 'database failure'});
             res.json(keyboards);
@@ -25,7 +25,7 @@ module.exports = function(app)
 
     // POST message
     app.post('/message', function(req,res){
-        console.log("/message");
+        console.log("POST /message");
 
         // 전처리 (intent랑 entities 가져오기)
         MessageService.preProcess(req, function(intents, entities){
