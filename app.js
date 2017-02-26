@@ -29,4 +29,4 @@ db.once('open', function(){
     console.log("Connected to mongod server");
 });
 
-mongoose.connect('mongodb://heroku_p6l2wmhv:heroku_p6l2wmhv!!!@ds161069.mlab.com:61069/heroku_p6l2wmhv');
+mongoose.connect('mongodb://serendip:serendip@ds161069.mlab.com:61069/heroku_p6l2wmhv');
