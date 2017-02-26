@@ -1,4 +1,4 @@
-{
+p{
   "name": "chatbot",
   "version": "1.0.0",
   "description": "",
@@ -7,5 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+  	"body-parser": ">= 1.16.1",
+  	"express": ">= 4.14.1",
+  	"mecab-ya": ">= 0.1.1",
+  	"moment": ">= 2.17.1",
+  	"mongoose": ">= 4.8.4"
+  }
+
 }
