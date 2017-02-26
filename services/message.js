@@ -37,7 +37,15 @@ exports.CandidateResponseGenerator = function(intents, entities, context, callba
     var itemProcessed = 0;
     var responseCandidates = [];
 
+    // intent도 없고, entitiy도 없는 request에는 응답하지 말자
+    if(intents.length === 0 && entities.length === 0) {
+        callback([{}]);
+        return ;
+    }
+
     // 만약에 intents가 없는 경우에는 context의 intent를 뒤져서 context의 intent를 넣어주자
+    // TODO : 근데 그냥 이전의 context를 무조건 넣어주는게 너무 위험 하지 않나?
+    // 일단 닫힌 대화에서는 고렇게 진행하자.
     if(intents.length === 0){
         intents.push(context.intent);
         console.log("   intent from context!("+context.intent.key+")");
@@ -68,6 +76,12 @@ exports.fillIntentEntites = function(intent, entities, context, callback){
         entity_keys = intent.get('entity_keys');
     else
         entity_keys = intent.entity_keys;
+
+    // entity_keys가 아예 없을 수도 있지
+    if(typeof entity_keys === 'undefined'){
+        // entity_keys.length === 0 이겠지
+        entity_keys = [];
+    }
 
     // 비동기 callback을 챙기기 위해...
     // new_entities를 받아서 잘 채워지면 callback 실행해주는 놈을 만들자
@@ -117,7 +131,7 @@ exports.fillIntentEntites = function(intent, entities, context, callback){
                     new_entity = {
                         key: entity.key,
                         name: entity.name,
-                        value: entity.default_val ? entity.default_val : undefined
+                        value: entity.default_value ? entity.default_value : undefined
                     };
 
                     console.log("   entity from default_value!("+new_entity.key+" : "+new_entity.value+")");

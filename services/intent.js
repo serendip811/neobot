@@ -4,6 +4,11 @@ var IntentModel = require('../models/intent');
 exports.classfication = function(nouns, callback){
     console.log('Intent Classfication');
 
+    if(nouns.length === 0){
+        // 빈 array callback
+        callback([]);
+    }
+
     var itemProcessed = 0;
     var expect_intents = [];
     nouns.forEach(function(value){

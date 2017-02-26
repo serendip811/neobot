@@ -12,6 +12,11 @@ exports.getEntity = function(entity_key, callback){
 exports.recognition = function(nouns, callback){
     console.log('Entity Recognition');
 
+    if(nouns.length === 0){
+        // 빈 array callback
+        callback([]);
+    }
+
     var itemProcessed = 0;
     var expect_entities = [];
     nouns.forEach(function(value){

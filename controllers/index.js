@@ -1,11 +1,13 @@
 // controllers/index.js
-var KeyboardModel = require('../models/keyboard');
+var ButtonService = require('../services/button');
 var MessageService = require('../services/message');
 var ContextService = require('../services/context');
 var ResponseService = require('../services/response');
 
 // https://hackernoon.com/chatbot-architecture-496f5bf820ed#.a5gtdbotv
 // 요기의 Architecture with response selection 이부분을 참고 함.
+
+// 각 챗봇 클라이언트에 맞게 request, response 처리하는거는 어떻게 할 수 있을까?
 
 module.exports = function(app)
 {
@@ -17,8 +19,8 @@ module.exports = function(app)
     // GET keyboard
     app.get('/keyboard', function(req,res){
         console.log("GET /keyboard");
-        KeyboardModel.findOne(function(err, keyboards){
-            if(err) return res.status(500).send({error: 'database failure'});
+
+        ButtonService.getKeyboard(function(keyboards){
             res.json(keyboards);
         });
     });
@@ -36,7 +38,14 @@ module.exports = function(app)
                     //응답 선택하기
                     ResponseService.selector(responseCandidates, context, function(response){
                         // TODO: 여기는 그냥 리턴할지 버튼, 타입 이런거 맞춰 리턴할지
-                        res.json(response);
+                        // 일단 카카오 형식으로 리턴해주자
+                        var kakao_response = {
+                            message : {
+                                text : response.message
+                            },
+                            keyboard : response.buttons
+                        }
+                        res.json(kakao_response);
                     });
                 });
             });

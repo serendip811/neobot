@@ -6,6 +6,7 @@ exports.nouns = function(text, callback){
     mecab.pos(text, function(err, result){
     	var nouns = [];
     	if(result){
+            console.log(result);
     		result.forEach(function(value){
     			if(['MAG', 'NNG'].indexOf(value[1]) >= 0){
     				nouns.push(value[0]);
