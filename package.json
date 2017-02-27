@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node_modules/mecab-ya/bin/install-mecab ko"
+    "postinstall": "apt-get install automake && node_modules/mecab-ya/bin/install-mecab ko"
   },
   "author": "",
   "license": "ISC",
