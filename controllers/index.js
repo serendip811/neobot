@@ -7,6 +7,9 @@ var ResponseService = require('../services/response');
 // https://hackernoon.com/chatbot-architecture-496f5bf820ed#.a5gtdbotv
 // 요기의 Architecture with response selection 이부분을 참고 함.
 
+// heroku와 mecab-ya 관련 issue
+// https://github.com/golbin/node-mecab-ya/issues/3
+
 // 각 챗봇 클라이언트에 맞게 request, response 처리하는거는 어떻게 할 수 있을까?
 
 module.exports = function(app)
