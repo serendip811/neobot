@@ -45,7 +45,7 @@ exports.selector = function(responseCandidates, context, callback){
     if(Object.keys(response).length === 0){
 		// no response
 		// TODO: 그냥 이렇게만 리턴해?
-		callback({message : 'no response!'});
+		callback({message : '커피, 주식, 메뉴에 관련된 얘기를 해볼까요...?'});
     } else {
 	    var user_key = context.user_key;
 	    // 새 intent와 entities로 context넣어주자
