@@ -46,6 +46,7 @@ exports.CandidateResponseGenerator = function(intents, entities, context, callba
     // 만약에 intents가 없는 경우에는 context의 intent를 뒤져서 context의 intent를 넣어주자
     // TODO : 근데 그냥 이전의 context를 무조건 넣어주는게 너무 위험 하지 않나?
     // 일단 닫힌 대화에서는 고렇게 진행하자.
+    // <- intent를 한번 더 질문하고 yes, no를 응답받는 부분을 만드는 것도 좋겠다.
     if(intents.length === 0){
         intents.push(context.intent);
         console.log("   intent from context!("+context.intent.key+")");
