@@ -6,6 +6,7 @@ var ButtonService = require('../services/button');
 var MenuResponse = require('./responses/menu');
 var StockResponse = require('./responses/stock');
 var CoffeeResponse = require('./responses/coffee');
+var FortuneResponse = require('./responses/fortune');
 
 exports.getResponses = function(intent, entities, context, callback){
 	console.log("response getResponses");
@@ -24,6 +25,9 @@ exports.getResponses = function(intent, entities, context, callback){
 			break;
 		case 'coffee' :
 			CoffeeResponse.getResponses(intent, entities, context, callback);
+			break;
+		case 'fortune' :
+			FortuneResponse.getResponses(intent, entities, context, callback);
 			break;
 		default :
 			// intent가 없는 경우 빈 response return
