@@ -1,6 +1,8 @@
 // services/resonse/stock.js
 var MessageService = require('../../services/message');
 var http = require('http');
+var Iconv = require('iconv').Iconv;
+var iconv = new Iconv('EUC-KR', 'UTF-8//TRANSLIT//IGNORE');
 
 // TODO : 여기 menu,stock 등.. response에서 공통부분 있는거 빼서 정리하자.
 
@@ -23,14 +25,16 @@ exports.getResponses = function(intent, entities, context, callback){
 		function handleResponse(response) {
 			var serverData = '';
 			response.on('data', function (chunk) {
-				serverData += chunk;
+				serverData = iconv.convert(chunk).toString('UTF-8'); 
 			});
+
 			response.on('end', function () {
 				console.log("Response Status:", response.statusCode);
 				console.log("Response Headers:", response.headers);
 				console.log("Response ServerData:",serverData);
 
-				message = serverData;
+				message = serverData.replace(/\r\n/g, '');
+
 				my_callback(intent, new_entities, message);
 			});
 		}
