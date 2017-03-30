@@ -1,6 +1,6 @@
 // services/resonse/stock.js
 var MessageService = require('../../services/message');
-var https = require('https');
+var http = require('http');
 
 // TODO : 여기 menu,stock 등.. response에서 공통부분 있는거 빼서 정리하자.
 
@@ -35,10 +35,10 @@ exports.getResponses = function(intent, entities, context, callback){
 			});
 		}
 
-		https.request({
-		host : 'fortune01.nate.com', 
-		port : 80,
-		path : '/contents/free/fortunecookie_data.jsp'
+		http.request({
+			host : 'fortune01.nate.com', 
+			port : 80,
+			path : '/contents/free/fortunecookie_data.jsp'
 		}, function(response){
 			handleResponse(response);
 		}).end();
