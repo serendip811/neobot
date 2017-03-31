@@ -35,7 +35,7 @@ exports.getResponses = function(intent, entities, context, callback){
 				stock = stock.tnv.value;
 				stock = JSON.parse(stock);
 				stock = stock.v[0][stock.v[0].length-1];
-				message = '[NEOWIZ GAMES] '+ stock + '\n화...화이팅!';
+				message = '[NEOWIZ] '+ stock + '\n화...화이팅!';
 				my_callback(intent, new_entities, message);
 			});
 		}
