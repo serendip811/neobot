@@ -1,5 +1,6 @@
 // services/resonse/stock.js
-var MessageService = require('../../services/message');
+var MessageService = require('../../../services/message');
+var FortuneModel = require('./models/fortune');
 var http = require('http');
 var iconv = require('iconv-lite');
 
@@ -34,16 +35,32 @@ exports.getResponses = function(intent, entities, context, callback){
 
 				message = serverData.replace(/\r\n/g, '');
 
+				// mongo에 message 저장
+			    var fortune = new FortuneModel({
+			    	user_key : context.user_key,
+			    	message : message
+			    });
+			    fortune.save();
+
 				my_callback(intent, new_entities, message);
 			});
-		}
+		}		
 
-		http.request({
-			host : 'fortune01.nate.com', 
-			port : 80,
-			path : '/contents/free/fortunecookie_data.jsp'
-		}, function(response){
-			handleResponse(response);
-		}).end();
+		// mongo에 있으면 mongo에서, 없으면 request 날리기
+		// mongo expire는 2시간 (7200초)
+		FortuneModel.findOne({user_key : user_key}, function(err, fortune){
+			if(err) return res.status(500).send({error: 'database failure'});
+			if(fortune){
+	        	my_callback(intent, new_entities, fortune.message);	
+			} else {
+				http.request({
+					host : 'fortune01.nate.com', 
+					port : 80,
+					path : '/contents/free/fortunecookie_data.jsp'
+				}, function(response){
+					handleResponse(response);
+				}).end();
+			}
+	    });
 	});
 }

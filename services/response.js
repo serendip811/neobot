@@ -6,7 +6,7 @@ var ButtonService = require('../services/button');
 var MenuResponse = require('./responses/menu');
 var StockResponse = require('./responses/stock');
 var CoffeeResponse = require('./responses/coffee');
-var FortuneResponse = require('./responses/fortune');
+var FortuneResponse = require('./modules/fortune/response');
 
 exports.getResponses = function(intent, entities, context, callback){
 	console.log("response getResponses");
