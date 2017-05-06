@@ -27,6 +27,6 @@ exports.nouns = function(text, callback){
     			}
     		});
     	}
-    	callback(err, nouns);
+    	callback(err, nouns, result);
     });
 };
