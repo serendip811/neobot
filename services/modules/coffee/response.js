@@ -1,15 +1,16 @@
 // services/resonse/stock.js
-var MessageService = require('../../services/message');
+var MessageService = require('../../../services/message');
 
 // 주식 정보 가져와서 뿌려주는 부분 구현하기
 exports.getResponses = function(intent, entities, context, callback){
 	console.log("coffee getResponses");
 
-	var my_callback = function(intent, entities, message){
+	var my_callback = function(intent, entities, name, sentence){
 		var response = {};
 		response.intent = intent;
 		response.entities = entities; // new_entities를 넣어준다.
-		response.message = message; // new_entities를 넣어준다.
+		response.message = name + sentence; // new_entities를 넣어준다.
+		response.buttons = [name+"님과 약속을 잡을래요!","다른분과 커피 마실게요..." ,"처음으로 돌아갈게요."];
 
 		callback(response);
 	}
@@ -21,8 +22,10 @@ exports.getResponses = function(intent, entities, context, callback){
     	var sentencelist = ["님과 커피 한잔 해보세요 :)", "님과 커피한잔 어때요?", "님이 커피 마시고 싶대요~"]
 
     	var rand_idx = Math.floor(Math.random() * namelist.length);
-    	message = namelist[rand_idx] + sentencelist[Math.floor(Math.random() * sentencelist.length)];
 
-    	my_callback(intent, new_entities, message);
+    	var name = namelist[rand_idx];
+    	var sentence = sentencelist[Math.floor(Math.random() * sentencelist.length)];
+
+    	my_callback(intent, new_entities, name, sentence);
 	});
 }
