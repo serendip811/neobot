@@ -6,9 +6,11 @@ var ButtonService = require('../services/button');
 var MenuResponse = require('./responses/menu');
 var StockResponse = require('./responses/stock');
 var CoffeeResponse = require('./responses/coffee');
+// var CoffeeResponse = require('./modules/coffee/response');
 var FortuneResponse = require('./modules/fortune/response');
+var AuthResponse = require('./modules/auth/response');
 
-exports.getResponses = function(intent, entities, context, callback){
+exports.getResponses = function(intent, entities, nouns, pos, context, callback){
 	console.log("response getResponses");
 
 	var intent_name = '';
@@ -28,6 +30,16 @@ exports.getResponses = function(intent, entities, context, callback){
 			break;
 		case 'fortune' :
 			FortuneResponse.getResponses(intent, entities, context, callback);
+			break;
+		case 'auth' :
+			AuthResponse.getResponses(intent, entities, pos, context, callback);
+			break;
+		case 'init' :
+			var response = {};
+			response.intent = intent;
+			response.entities = entities; // new_entities를 넣어준다.
+			response.message = "처음 메뉴로 돌아갑니다."; // new_entities를 넣어준다.
+			callback(response);
 			break;
 		default :
 			// intent가 없는 경우 빈 response return
@@ -57,18 +69,24 @@ exports.selector = function(responseCandidates, context, callback){
 	    var intent = response.intent;
 	    var entities = response.entities;
 
-	    // 기본 keyboard 가져와서...
-	    ButtonService.getKeyboard(function(keyboards){
-	    	response.buttons = keyboards;
-	    	ContextService.setContext(user_key, intent, entities, function(){
-				// TODO: 그냥 이렇게만 리턴해?
-				// 카카오에 맞는 형식으로 잘 바꿔서 json으로 이쁘게 return 해줘야 할텐데? 여기서 할지 밖에서 할지는 고민
+	    // response에 button이 같이 온 경우는 해당 buttons로 response하고...
+	    if(response.buttons){
+		    	ContextService.setContext(user_key, intent, entities, function(){
+				    console.log("response :", response);
+					callback(response);
+				});
+	    } else {
+	    	// 기본 keyboard 가져와서...
+		    ButtonService.getKeyboard(function(keyboards){
+		    	response.buttons = keyboards;
+		    	ContextService.setContext(user_key, intent, entities, function(){
+				    console.log("response :", response);
+					callback(response);
+				});
+	        });	    	
+	    }
 
-			    console.log("response :", response);
-				callback(response);
-			});
 
-        });
 
     }
 }
