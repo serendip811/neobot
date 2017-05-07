@@ -10,7 +10,7 @@ exports.getResponses = function(intent, entities, context, callback){
 		response.intent = intent;
 		response.entities = entities; // new_entities를 넣어준다.
 		response.message = name + sentence; // new_entities를 넣어준다.
-		response.buttons = [name+"님과 약속을 잡을래요!","다른분과 커피 마실게요..." ,"처음으로 돌아갈게요."];
+		response.buttons = ["다른분과 커피 마실게요..." ,"처음으로 돌아갈게요."];
 
 		callback(response);
 	}

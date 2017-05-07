@@ -5,8 +5,7 @@ var ButtonService = require('../services/button');
 // intent와 응답 로직이 추가될 때마다 요기 추가해주기
 var MenuResponse = require('./responses/menu');
 var StockResponse = require('./responses/stock');
-var CoffeeResponse = require('./responses/coffee');
-// var CoffeeResponse = require('./modules/coffee/response');
+var CoffeeResponse = require('./modules/coffee/response');
 var FortuneResponse = require('./modules/fortune/response');
 var AuthResponse = require('./modules/auth/response');
 
@@ -73,6 +72,10 @@ exports.selector = function(responseCandidates, context, callback){
 	    if(response.buttons){
 		    	ContextService.setContext(user_key, intent, entities, function(){
 				    console.log("response :", response);
+					response.buttons = {
+						type : "buttons",
+						buttons: response.buttons
+					}
 					callback(response);
 				});
 	    } else {
