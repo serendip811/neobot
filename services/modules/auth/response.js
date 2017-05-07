@@ -4,6 +4,7 @@ var AuthcodeModel = require('./models/authcode');
 var UserkeyModel = require('./models/userkey');
 var http = require('http');
 var iconv = require('iconv-lite');
+var exec = require("child_process").exec, child;
 
 exports.getResponses = function(intent, entities, pos, context, callback){
 	console.log("auth getResponses");
@@ -85,8 +86,12 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 
 						// 이메일 발송하기
 
+						var command = 'echo "인증코드 : '+ auth_code +'" | mail -s "[Neobot] Auth Code" '+ ADID+'@neowiz.com';
 
-						my_callback(intent, new_entities, ADID+"@neowiz.com 으로 인증코드를 발송하였습니다. 인증코드를 입력해주세요.", 1);
+						child = exec(command, function(error, stdout, stderr){
+						});
+
+						my_callback(intent, new_entities, ADID+"@neowiz.com 으로 인증코드를 발송하였습니다. 인증코드를 입력해주세요.", 2);
 						return ;
 					}
 				});
@@ -102,8 +107,11 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 					}
 				}
 
-				AuthcodeModel.findOne({user_key : context.user_key}, {"date" : -1}, function(err, authcode){
+					console.log(auth_code);
+				AuthcodeModel.findOne({user_key : context.user_key}, null, {sort:{date:-1}}, function(err, authcode){
+
 					if(err) return res.status(500).send({error: 'database failure'});
+					console.log(authcode);
 					if(authcode){
 						if(authcode.auth_code === auth_code){
 							//인증 성공
