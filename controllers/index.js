@@ -44,7 +44,7 @@ module.exports = function(app)
                         // 일단 카카오 형식으로 리턴해주자
 
                         var kakao_response = {};
-                        kakao_response.messsage = { text : response.message};
+                        kakao_response.message = { text : response.message};
 
                         // text가 아닐때 keyboard넣어주고, text면 생략
                         if(response.type !== "text")
