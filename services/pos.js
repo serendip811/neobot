@@ -22,7 +22,7 @@ exports.nouns = function(text, callback){
     	if(result){
             console.log(result);
     		result.forEach(function(value){
-    			if(['MAG', 'NNG'].indexOf(value[1]) >= 0){
+    			if(['MAG', 'NNG', 'NNP'].indexOf(value[1]) >= 0){
     				nouns.push(value[0]);
     			}
     		});
