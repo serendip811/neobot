@@ -29,7 +29,7 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 		var message = '';
 
 		// 인증 정보 있는지
-		UserkeyModel.findOne({userkey : context.user_key}, function(err, userkey){
+		UserkeyModel.findOne({user_key : context.user_key}, function(err, userkey){
 			if(err) return res.status(500).send({error: 'database failure'});
 			if(userkey){
 				firebase.database().ref('/users/' + userkey.neowiz_id).once('value').then(function(snapshot) {
