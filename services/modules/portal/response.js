@@ -3,16 +3,6 @@ var MessageService = require('../../../services/message');
 var UserkeyModel = require('../auth/models/userkey');
 var firebase = require("firebase");
 
-var config = {
-	apiKey: "AIzaSyACMwQ-XUgtDkNmtE6iWSiYWxu8m2ffE_8",
-	authDomain: "serendip-test.firebaseapp.com",
-	databaseURL: "https://serendip-test.firebaseio.com",
-	projectId: "serendip-test",
-	storageBucket: "serendip-test.appspot.com",
-	messagingSenderId: "699720679397"
-};
-firebase.initializeApp(config);
-
 exports.getResponses = function(intent, entities, pos, context, callback){
 	console.log("portal getResponses");
 

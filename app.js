@@ -20,6 +20,18 @@ var server = app.listen(port, function(){
 	console.log("Express server has started on port " + port)
 });
 
+var firebase = require("firebase");
+
+var config = {
+	apiKey: "AIzaSyACMwQ-XUgtDkNmtE6iWSiYWxu8m2ffE_8",
+	authDomain: "serendip-test.firebaseapp.com",
+	databaseURL: "https://serendip-test.firebaseio.com",
+	projectId: "serendip-test",
+	storageBucket: "serendip-test.appspot.com",
+	messagingSenderId: "699720679397"
+};
+firebase.initializeApp(config);
+
 // [ CONFIGURE mongoose ]
 // CONNECT TO MONGODB SERVER
 var db = mongoose.connection;

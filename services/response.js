@@ -9,6 +9,7 @@ var CoffeeResponse = require('./modules/coffee/response');
 var FortuneResponse = require('./modules/fortune/response');
 var AuthResponse = require('./modules/auth/response');
 var PortalResponse = require('./modules/portal/response');
+var WeatherResponse = require('./modules/weather/response');
 
 exports.getResponses = function(intent, entities, nouns, pos, context, callback){
 	console.log("response getResponses");
@@ -36,6 +37,9 @@ exports.getResponses = function(intent, entities, nouns, pos, context, callback)
 			break;
 		case 'portal' :
 			PortalResponse.getResponses(intent, entities, pos, context, callback);
+			break;
+		case 'weather' :
+			WeatherResponse.getResponses(intent, entities, pos, context, callback);
 			break;
 		case 'init' :
 			var response = {};
