@@ -39,8 +39,7 @@ if($ldapconn) {
             $user['company'] = iconv("euc-kr","utf-8",$data[$i]["company"][0]);
             $user['department'] = iconv("euc-kr","utf-8",$data[$i]["department"][0]);
             $user['name'] = iconv("euc-kr","utf-8",$data[$i]["displayname"][0]);
-
-            var_dump($user);
+            echo json_encode($user);
         }
         // print number of entries found
         // echo "Number of entries found: " . ldap_count_entries($ldapconn, $result);

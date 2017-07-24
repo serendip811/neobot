@@ -5,6 +5,7 @@ var UserkeyModel = require('./models/userkey');
 var http = require('http');
 var iconv = require('iconv-lite');
 var exec = require("child_process").exec, child;
+var path = require('path');
 
 exports.getResponses = function(intent, entities, pos, context, callback){
 	console.log("auth getResponses");
@@ -114,16 +115,31 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 					console.log(authcode);
 					if(authcode){
 						if(authcode.auth_code === auth_code){
-							//인증 성공
-						    var userkey = new UserkeyModel({
-						    	user_key : context.user_key,
-						    	neowiz_id : authcode.neowiz_id,
-						    	neowiz_mail : authcode.neowiz_mail
-						    });
-						    userkey.save();
 
-							my_callback(intent, new_entities, "인증에 성공하였습니다 (__)", 999);
-							return ;
+							var appRoot = path.resolve(__dirname);
+							var command = 'php '+appRoot+'/ldap.php '+authcode.neowiz_id;
+
+							child = exec(command, function(error, stdout, stderr){
+
+								console.log(stdout);
+								var objUser = JSON.parse(stdout);
+
+								//인증 성공
+							    var userkey = new UserkeyModel({
+							    	user_key : context.user_key,
+							    	neowiz_id : authcode.neowiz_id,
+							    	neowiz_mail : authcode.neowiz_mail,
+							    	name : objUser.name.replace(/\s/g,''),
+							    	company : objUser.company,
+							    	department : objUser.department
+							    });
+							    userkey.save();
+
+								my_callback(intent, new_entities, name+"님 반갑습니다! 인증에 성공하였습니다 (__)", 999);
+								return ;
+
+							});	
+
 						} else {
 							my_callback(intent, new_entities, "올바르지 않은 코드입니다. 다시 입력해주세요.", 2);
 							return ;
