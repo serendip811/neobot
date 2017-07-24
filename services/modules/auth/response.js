@@ -138,7 +138,7 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 
 
 
-								my_callback(intent, new_entities, name+"님 반갑습니다! 인증에 성공하였습니다 (__)", 999);
+								my_callback(intent, new_entities, userkey.name+"님 반갑습니다! 인증에 성공하였습니다 (__)", 999);
 								return ;
 
 							});	
