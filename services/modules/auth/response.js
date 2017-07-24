@@ -116,8 +116,7 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 					if(authcode){
 						if(authcode.auth_code === auth_code){
 
-							var appRoot = path.resolve(__dirname);
-							var command = 'php '+appRoot+'/ldap.php '+authcode.neowiz_id;
+							var command = 'php '+global.appRoot+'/ldap.php '+authcode.neowiz_id;
 
 							child = exec(command, function(error, stdout, stderr){
 

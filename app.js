@@ -1,7 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var path = require('path');
+
 mongoose.Promise = require('bluebird');
+global.appRoot = path.resolve(__dirname);
 
 var app = express();
 
