@@ -10,8 +10,8 @@ $cn = $argv[1];
 
 // config
 $ldapserver = '10.30.64.11';
-$ldapuser = 'neowiz\\adsync';  
-$ldappass = 'spdhdnlwm1234!';
+$ldapuser = 'neowiz\\loveneowizn';  
+$ldappass = 'glasotpdy!@3';
 $ldaptree = "OU=NeoWiz,DC=ds,DC=neowiz,DC=com";
 
 // connect 
