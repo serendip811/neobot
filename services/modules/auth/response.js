@@ -121,18 +121,22 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 							child = exec(command, function(error, stdout, stderr){
 
 								console.log(stdout);
-								var objUser = JSON.parse(stdout);
+								if(!stdout.startsWith("err")){
+									var arrUser = stdout.split(",");
 
-								//인증 성공
-							    var userkey = new UserkeyModel({
-							    	user_key : context.user_key,
-							    	neowiz_id : authcode.neowiz_id,
-							    	neowiz_mail : authcode.neowiz_mail,
-							    	name : objUser.name.replace(/\s/g,''),
-							    	company : objUser.company,
-							    	department : objUser.department
-							    });
-							    userkey.save();
+									//인증 성공
+								    var userkey = new UserkeyModel({
+								    	user_key : context.user_key,
+								    	neowiz_id : authcode.neowiz_id,
+								    	neowiz_mail : authcode.neowiz_mail,
+								    	name : arrUser[3].replace(/\s/g,''),
+								    	company : arrUser[1],
+								    	department : arrUser[2]
+								    });
+								    userkey.save();
+								}
+
+
 
 								my_callback(intent, new_entities, name+"님 반갑습니다! 인증에 성공하였습니다 (__)", 999);
 								return ;
