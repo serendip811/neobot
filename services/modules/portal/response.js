@@ -33,7 +33,7 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 						my_callback(intent, new_entities, "포털에 등록되는 새글을 메일로 받아보지 않습니다.");
 					} else {
 						// 구독
-						fs.writeFile(os.homedir()+'/craw/users/'+userkey.neowiz_id, '', (err) => {
+						fs.writeFile(os.homedir()+'/craw/users/'+userkey.neowiz_id, (err) => {
 						});
 						my_callback(intent, new_entities, "포털에 등록되는 새글을 메일로 받아봅니다.");
 					}
