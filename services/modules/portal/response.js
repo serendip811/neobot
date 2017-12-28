@@ -2,6 +2,8 @@
 var MessageService = require('../../../services/message');
 var UserkeyModel = require('../auth/models/userkey');
 var firebase = require("firebase");
+var fs = require("fs");
+var os = require("os");
 
 exports.getResponses = function(intent, entities, pos, context, callback){
 	console.log("portal getResponses");
@@ -22,17 +24,18 @@ exports.getResponses = function(intent, entities, pos, context, callback){
 		UserkeyModel.findOne({user_key : context.user_key}, function(err, userkey){
 			if(err) return res.status(500).send({error: 'database failure'});
 			if(userkey){
-				firebase.database().ref('/users/' + userkey.neowiz_id).once('value').then(function(snapshot) {
-					if(snapshot.val() == null) {
+
+				fs.exists(os.homedir()+'/craw/users/'+userkey.neowiz_id, function(exists) {
+					if(exists) {
+						// 구독해지
+						fs.unlink(os.homedir()+'/craw/users/'+userkey.neowiz_id, '', (err) => {
+						});
+						my_callback(intent, new_entities, "포털에 등록되는 새글을 메일로 받아보지 않습니다.");
+					} else {
 						// 구독
-						firebase.database().ref('users/' + userkey.neowiz_id).set({
-							subscription: true
+						fs.writeFile(os.homedir()+'/craw/users/'+userkey.neowiz_id, '', (err) => {
 						});
 						my_callback(intent, new_entities, "포털에 등록되는 새글을 메일로 받아봅니다.");
-					} else {
-						// 구독해지
-						firebase.database().ref('users/' + userkey.neowiz_id).remove();
-						my_callback(intent, new_entities, "포털에 등록되는 새글을 메일로 받아보지 않습니다.");
 					}
 				});
 				return ;
