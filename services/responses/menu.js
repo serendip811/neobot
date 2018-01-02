@@ -2,6 +2,8 @@
 var MessageService = require('../../services/message');
 var https = require('https');
 var moment = require('moment');
+var fs = require('fs');
+var os = require('os');
 
 // TODO : 여기 menu,stock 등.. response에서 공통부분 있는거 빼서 정리하자.
 // 아마 response.js로 넣을 수 있을듯
@@ -85,42 +87,33 @@ exports.getResponses = function(intent, entities, context, callback){
 	    		break;
 	    }
 
-	    var yql_query = "/menus/" + date + "/" + time_meal + ".json"
-	    console.log(yql_query);
-
-		function handleResponse(response) {
-			var serverData = '';
-			response.on('data', function (chunk) {
-				serverData += chunk;
-			});
-			response.on('end', function () {
-				console.log("Response Status:", response.statusCode);
-				console.log("Response Headers:", response.headers);
-				console.log("Response ServerData:",serverData);
-
-				var menu = JSON.parse(serverData);
-				var idx = 0;
-				message += date + "의 " + time_meal+"은 다음과 같습니다.\n"
-				for (var m in menu) {
-					if(menu[m].trim() !== '&nbsp;'){
-						if(idx > 0) message += '\n';
-						message += m+":"+menu[m];
-						idx++;
-					}
-				}
-				message += "\n식사 맛있게 하십쇼 (__)";
-
+		var file_path = os.homedir()+'/craw/menus/'+date+'.menu';
+	    console.log(file_path);
+		fs.readFile(file_path, 'utf8', function(err, data){
+			if(err) {
+				console.log(err);
+				message = "error";
 				my_callback(intent, new_entities, message, time_meal);
-			});
-		}
+				return ;
+			}
 
-		https.request({
-			host : 'serendip-test.firebaseio.com',
-			port : 443,
-			path : yql_query
-		}, function(response){
-			handleResponse(response);
-		}).end();
+			var menu = JSON.parse(data);
+			menu = menu[time_meal];
 
+			var idx = 0;
+			message += date + "의 " + time_meal+"은 다음과 같습니다.\n"
+			for (var m in menu) {
+				if(menu[m].trim() !== '&nbsp;'){
+					if(idx > 0) message += '\n';
+					message += m+":"+menu[m];
+					idx++;
+				}
+			}
+			message += "\n식사 맛있게 하십쇼 (__)";
+
+			my_callback(intent, new_entities, message, time_meal);
+
+
+		});
 	});
 }
