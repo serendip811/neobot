@@ -92,7 +92,7 @@ exports.getResponses = function(intent, entities, context, callback){
 		fs.readFile(file_path, 'utf8', function(err, data){
 			if(err) {
 				console.log(err);
-				message = "error";
+				message = "배치가 수행되지 않았습니다. 관리자에게 알려주세요.ㅠㅠ";
 				my_callback(intent, new_entities, message, time_meal);
 				return ;
 			}
